@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday - ROLA</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Times New Roman', serif;
+            overflow: hidden;
+            position: relative;
+        }
+        .gothic-container {
+            text-align: center;
+            color: red;
+            border: 6px double red;
+            padding: 50px;
+            background-color: rgba(20, 0, 0, 0.95);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
+            position: relative;
+            animation: pulse 2.5s infinite;
+            z-index: 1;
+            border-radius: 10px;
+        }
+        .name {
+            font-size: 100px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            text-shadow: 5px 5px 20px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.7);
+            animation: flicker 1.8s infinite;
+        }
+        .message {
+            font-size: 34px;
+            margin-top: 20px;
+            font-style: italic;
+            text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.7);
+        }
+        .paragraph {
+            font-size: 20px;
+            color: #ff3333;
+            margin: 20px 0;
+            max-width: 400px;
+            line-height: 1.4;
+            text-shadow: 1px 1px 5px rgba(255, 0, 0, 0.5);
+        }
+        .paragraph span {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        .skull {
+            font-size: 60px;
+            margin-top: 25px;
+            animation: spin 5s infinite linear;
+        }
+        .gothic-cake {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: cakeGlow 2s infinite;
+        }
+        .cake {
+            color: red;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+            filter: brightness(0.8) saturate(1.5); /* Enhances red tones */
+        }
+        .cake-candle {
+            font-size: 20px;
+            color: red;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.9);
+            animation: flickerCandle 0.5s infinite;
+        }
+        .rose {
+            position: absolute;
+            top: -40px;
+            right: 20px;
+            font-size: 30px;
+            color: red;
+            animation: glowRose 2s infinite;
+        }
+        .moon {
+            position: absolute;
+            top: -60px;
+            left: 20px;
+            font-size: 50px;
+            color: red;
+            animation: glow 3s infinite alternate;
+        }
+        .web {
+            position: absolute;
+            font-size: 40px;
+            color: rgba(255, 0, 0, 0.5);
+        }
+        .web:nth-child(1) { top: 10px; left: 10px; }
+        .web:nth-child(2) { bottom: 10px; right: 10px; }
+        .drip {
+            position: absolute;
+            top: -20px;
+            width: 12px;
+            height: 20px;
+            background: red;
+            animation: drip 2s infinite ease-in;
+            border-radius: 50% 50% 0 0;
+        }
+        .drip:nth-child(1) { left: 15%; animation-delay: 0s; }
+        .drip:nth-child(2) { left: 50%; animation-delay: 0.5s; }
+        .drip:nth-child(3) { left: 85%; animation-delay: 1s; }
+        .bat {
+            position: absolute;
+            font-size: 35px;
+            color: red;
+            animation: fly 5s infinite ease-in-out;
+        }
+        .bat:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; }
+        .bat:nth-child(2) { top: 25%; left: 65%; animation-delay: 1.5s; }
+        .bat:nth-child(3) { top: 10%; left: 40%; animation-delay: 3s; }
+        /* Background with fog and blood splatter */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(60, 0, 0, 0.4), black);
+            z-index: 0;
+            overflow: hidden;
+        }
+        .fog {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(50, 0, 0, 0.3), transparent);
+            animation: drift 15s infinite linear;
+        }
+        .blood-splatters {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 10%, transparent 20%),
+                        radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.15) 15%, transparent 25%),
+                        radial-gradient(circle at 70% 30%, rgba(255, 0, 0, 0.12) 12%, transparent 22%);
+            opacity: 0.5;
+            z-index: 0;
+            animation: splatterFade 4s infinite alternate;
+        }
+        .blood-drop {
+            position: absolute;
+            width: 8px;
+            height: 15px;
+            background: red;
+            border-radius: 50% 50% 0 0;
+            animation: bloodFall 3s infinite linear;
+        }
+        .blood-drop:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .blood-drop:nth-child(2) { left: 30%; animation-delay: 1s; }
+        .blood-drop:nth-child(3) { left: 60%; animation-delay: 0.5s; }
+        .blood-drop:nth-child(4) { left: 90%; animation-delay: 2s; }
+        /* Animations */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.3; }
+        }
+        @keyframes flickerCandle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(255, 0, 0, 1); }
+            100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+        }
+        @keyframes drip {
+            0% { height: 0; top: -20px; opacity: 1; }
+            50% { height: 60px; top: 0; }
+            100% { height: 0; top: 40px; opacity: 0; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes fly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(60px, -40px) rotate(10deg); }
+            50% { transform: translate(120px, 30px) rotate(0deg); }
+            75% { transform: translate(60px, -20px) rotate(-10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        @keyframes drift {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(255, 0, 0, 0.9); }
+        }
+        @keyframes glowRose {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @keyframes splatterFade {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.5; }
+        }
+        @keyframes bloodFall {
+            0% { top: -20px; opacity: 1; transform: scale(1); }
+            100% { top: 100%; opacity: 0; transform: scale(0.8); }
+        }
+        @keyframes cakeGlow {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="fog"></div>
+        <div class="blood-splatters"></div>
+    </div>
+    <div class="gothic-container">
+        <div class="drip"></div>
+        <div class="drip"></div>
+        <div class="drip"></div>
+        <div class="web">🕸️</div>
+        <div class="web">🕸️</div>
+        <div class="moon">🌙</div>
+        <div class="rose">🌹</div>
+        <div class="name">ROLA</div>
+        <div class="message">Happy Birthday!</div>
+        <div class="paragraph" id="animated-paragraph">
+            Rola, you’re a dark, shining star in my life. Your laughter lights up even the gloomiest days, and your kindness is a rare treasure I cherish deeply. I’m so grateful for every moment with you!
+        </div>
+        <div class="skull">💀</div>
+        <div class="gothic-cake">
+            <span class="cake-candle">🕯️</span>
+            <span class="cake">🎂</span>
+        </div>
+    </div>
+    <div class="bat">🦇</div>
+    <div class="bat">🦇</div>
+    <div class="bat">🦇</div>
+    <div class="blood-drop"></div>
+    <div class="blood-drop"></div>
+    <div class="blood-drop"></div>
+    <div class="blood-drop"></div>
+
+    <!-- Heartbeat Audio -->
+    <audio id="heartbeat" autoplay loop>
+        <source src="https://www.soundjay.com/buttons/heartbeat-01a.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        // JavaScript to wrap each character in a span and assign animation delays
+        const paragraph = document.getElementById('animated-paragraph');
+        const text = paragraph.textContent;
+        paragraph.innerHTML = ''; // Clear the original text
+
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.animationDelay = `${index * 0.05}s`; // 0.05s delay per character
+            paragraph.appendChild(span);
+        });
+
+        // Control heartbeat audio volume
+        const heartbeat = document.getElementById('heartbeat');
+        heartbeat.volume = 0.3; // Set volume to 30% to keep it subtle
+    </script>
+</body>
+</html>
